@@ -16,6 +16,8 @@ int cliNum = 0;
 void ShowMenu(void);
 void MakeAccount(void);
 void Deposit(void);
+void Withdraw(void);
+void ShowInfo(void);
 
 int main(void)
 {
@@ -38,11 +40,11 @@ int main(void)
 			break;
 
 		case 3:	// 출금
-			cout << "출금 기능을 선택하셨습니다." << endl;
+			Withdraw();
 			break;
 
 		case 4:	// 전체고객 잔액조회
-			cout << "전체고객 잔액조회 기능을 선택하셨습니다." << endl;
+			ShowInfo();
 			break;
 
 		case 5:	// 프로그램 종료
@@ -70,8 +72,8 @@ void MakeAccount(void)
 	//int id, money;
 	//char name[NAME_LEN];
 
-	cout << "계좌개설 기능을 선택하셨습니다." << endl;
-	cout << "새롭게 개설할 계좌의 계좌주 입력: ";
+	cout << "[계좌개설]" << endl;
+	cout << "계좌주 입력: ";
 	//cin >> name;
 	//strcpy_s(clients[cliNum].name, name);
 	cin >> clients[cliNum].name;
@@ -85,6 +87,7 @@ void MakeAccount(void)
 	//cin >> money;
 	//clients[cliNum].balance = money;
 	cin >> clients[cliNum].balance;
+	cout << endl;
 
 	cout << "계좌주: " << clients[cliNum].name << endl;
 	cout << "계좌번호: " << clients[cliNum].accID << endl;	
@@ -98,7 +101,7 @@ void Deposit(void)
 {
 	int acc, money;
 
-	cout << "입금 기능을 선택하셨습니다." << endl;
+	cout << "[입금]" << endl;
 	cout << "입금할 계좌의 계좌번호 입력: ";
 	cin >> acc;
 	cout << endl;
@@ -125,4 +128,56 @@ void Deposit(void)
 
 	cout << "존재하지 않는 계좌입니다." << endl;
 	cout << endl;
+}
+
+void Withdraw(void)
+{
+	int acc, money;
+
+	cout << "[출금]" << endl;
+	cout << "출금할 계좌의 계좌번호 입력: ";
+	cin >> acc;
+	cout << endl;
+
+	for (int i = 0; i < 100; i++)
+	{
+		if (clients[i].accID == acc)
+		{
+			cout << "계좌주: " << clients[i].name << endl;
+			cout << "계좌번호: " << clients[i].accID << endl;
+
+			cout << "출금할 금액 입력: ";
+			cin >> money;
+			cout << endl;
+
+			if (clients[i].balance <= 0 || clients[i].balance < money)
+			{
+				cout << "잔액부족" << endl;
+				cout << endl;
+				return;
+			}
+
+			clients[i].balance -= money;
+
+			cout << "출금 완료" << endl << "잔액: " << clients[i].balance << endl;
+			cout << endl;
+			return;
+		}
+	}
+
+	cout << "존재하지 않는 계좌입니다." << endl;
+	cout << endl;
+}
+
+void ShowInfo(void)
+{
+	cout << "[전체고객 잔액조회]" << endl;
+
+	for (int i = 0; i < cliNum; i++)
+	{
+		cout << "계좌주: " << clients[i].name << endl;
+		cout << "계좌번호: " << clients[i].accID << endl;
+		cout << "잔액: " << clients[i].balance << endl;
+		cout << endl;
+	}
 }
