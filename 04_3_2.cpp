@@ -56,6 +56,12 @@ public:
 		cout << "Á÷±Ş: "; COMP_POS::ShowPosInfo(position);
 		cout << endl;
 	}
+	~NameCard()
+	{
+		delete[]name;
+		delete[]company;
+		delete[]phone;
+	}
 };
 
 int main(void)
