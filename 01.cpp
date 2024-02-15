@@ -10,8 +10,8 @@ typedef struct info
 	int balance;
 } Info;
 
-Info clients[100];
-int cliNum = 0;
+Info accArr[100];
+int accCnt = 0;
 
 void ShowMenu(void);
 void MakeAccount(void);
@@ -76,25 +76,25 @@ void MakeAccount(void)
 	cout << "°èÁÂÁÖ ÀÔ·Â: ";
 	//cin >> name;
 	//strcpy_s(clients[cliNum].name, name);
-	cin >> clients[cliNum].name;
+	cin >> accArr[accCnt].name;
 
 	cout << "°èÁÂ¹øÈ£ »ý¼º: ";
 	//cin >> id;
 	//clients[cliNum].accID = id;
-	cin >> clients[cliNum].accID;
+	cin >> accArr[accCnt].accID;
 
 	cout << "ÀÔ±Ý¾×: ";
 	//cin >> money;
 	//clients[cliNum].balance = money;
-	cin >> clients[cliNum].balance;
+	cin >> accArr[accCnt].balance;
 	cout << endl;
 
-	cout << "°èÁÂÁÖ: " << clients[cliNum].name << endl;
-	cout << "°èÁÂ¹øÈ£: " << clients[cliNum].accID << endl;	
-	cout << "ÀÜ°í: "<< clients[cliNum].balance << endl;
+	cout << "°èÁÂÁÖ: " << accArr[accCnt].name << endl;
+	cout << "°èÁÂ¹øÈ£: " << accArr[accCnt].accID << endl;	
+	cout << "ÀÜ°í: "<< accArr[accCnt].balance << endl;
 	cout << endl;
 	
-	cliNum++;
+	accCnt++;
 }
 
 void Deposit(void)
@@ -108,18 +108,18 @@ void Deposit(void)
 
 	for (int i = 0; i < 100; i++)
 	{
-		if (clients[i].accID == acc)
+		if (accArr[i].accID == acc)
 		{
-			cout << "°èÁÂÁÖ: " << clients[i].name << endl;
-			cout << "°èÁÂ¹øÈ£: " << clients[i].accID << endl;
+			cout << "°èÁÂÁÖ: " << accArr[i].name << endl;
+			cout << "°èÁÂ¹øÈ£: " << accArr[i].accID << endl;
 
 			cout << "ÀÔ±ÝÇÒ ±Ý¾× ÀÔ·Â: ";
 			cin >> money;
 			cout << endl;
 
-			clients[i].balance += money;
+			accArr[i].balance += money;
 
-			cout << "ÀÔ±Ý ¿Ï·á" << endl << "ÀÜ°í: " << clients[i].balance << endl;
+			cout << "ÀÔ±Ý ¿Ï·á" << endl << "ÀÜ°í: " << accArr[i].balance << endl;
 			cout << endl;
 
 			return;
@@ -141,25 +141,25 @@ void Withdraw(void)
 
 	for (int i = 0; i < 100; i++)
 	{
-		if (clients[i].accID == acc)
+		if (accArr[i].accID == acc)
 		{
-			cout << "°èÁÂÁÖ: " << clients[i].name << endl;
-			cout << "°èÁÂ¹øÈ£: " << clients[i].accID << endl;
+			cout << "°èÁÂÁÖ: " << accArr[i].name << endl;
+			cout << "°èÁÂ¹øÈ£: " << accArr[i].accID << endl;
 
 			cout << "Ãâ±ÝÇÒ ±Ý¾× ÀÔ·Â: ";
 			cin >> money;
 			cout << endl;
 
-			if (clients[i].balance <= 0 || clients[i].balance < money)
+			if (accArr[i].balance <= 0 || accArr[i].balance < money)
 			{
 				cout << "ÀÜ¾×ºÎÁ·" << endl;
 				cout << endl;
 				return;
 			}
 
-			clients[i].balance -= money;
+			accArr[i].balance -= money;
 
-			cout << "Ãâ±Ý ¿Ï·á" << endl << "ÀÜ¾×: " << clients[i].balance << endl;
+			cout << "Ãâ±Ý ¿Ï·á" << endl << "ÀÜ¾×: " << accArr[i].balance << endl;
 			cout << endl;
 			return;
 		}
@@ -173,11 +173,11 @@ void ShowInfo(void)
 {
 	cout << "[ÀüÃ¼°í°´ ÀÜ¾×Á¶È¸]" << endl;
 
-	for (int i = 0; i < cliNum; i++)
+	for (int i = 0; i < accCnt; i++)
 	{
-		cout << "°èÁÂÁÖ: " << clients[i].name << endl;
-		cout << "°èÁÂ¹øÈ£: " << clients[i].accID << endl;
-		cout << "ÀÜ¾×: " << clients[i].balance << endl;
+		cout << "°èÁÂÁÖ: " << accArr[i].name << endl;
+		cout << "°èÁÂ¹øÈ£: " << accArr[i].accID << endl;
+		cout << "ÀÜ¾×: " << accArr[i].balance << endl;
 		cout << endl;
 	}
 }
