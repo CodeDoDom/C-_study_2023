@@ -38,15 +38,15 @@ private:
 	char* phone;
 	int position;
 public:
-	NameCard(const char* _name, const char* _company, const char* _phone, int pos)
+	NameCard(const char* name, const char* company, const char* phone, int pos)
 		:position(pos)
 	{
-		name = new char[strlen(_name) + 1];
-		company = new char[strlen(_company) + 1];
-		phone = new char[strlen(_phone) + 1];
-		strcpy(name, _name);
-		strcpy(company, _company);
-		strcpy(phone, _phone);
+		this->name = new char[strlen(name) + 1];
+		this->company = new char[strlen(company) + 1];
+		this->phone = new char[strlen(phone) + 1];
+		strcpy(this->name, name);
+		strcpy(this->company, company);
+		strcpy(this->phone, phone);
 	}
 	NameCard(const NameCard& copy)
 		:position(copy.position)
