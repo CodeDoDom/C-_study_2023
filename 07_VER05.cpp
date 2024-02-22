@@ -3,7 +3,7 @@
 #include <cstring>
 using namespace std;
 
-#define NAME_LEN 10
+const int NAME_LEN = 20;
 
 enum { MAKE = 1, DEPOSIT, WITHDRAW, SHOW, EXIT };
 
