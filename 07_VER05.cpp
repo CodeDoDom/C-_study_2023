@@ -67,7 +67,7 @@ class AccountHandler
 {
 private:
 	Account* accArr[100];
-	int accCnt = 0;
+	int accCnt;
 public:
 	AccountHandler();
 	void ShowMenu() const;
