@@ -174,7 +174,10 @@ void AccountHandler::Withdraw()
 }
 
 AccountHandler::AccountHandler() :accCnt(0)
-{ }
+{
+	for (int i = 0; i < 100; ++i)
+		accArr[i] = nullptr;
+}
 
 void AccountHandler::ShowInfo() const
 {
