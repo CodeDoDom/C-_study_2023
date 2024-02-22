@@ -160,7 +160,10 @@ void AccountHandler::WithdrawMoney(void)
 }
 
 AccountHandler::AccountHandler() : accNum(0)
-{ }
+{
+	for (int i = 0; i < 100; ++i)
+		accArr[i] = nullptr;
+}
 
 void AccountHandler::ShowAllAccInfo(void) const
 {
