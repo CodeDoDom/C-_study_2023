@@ -11,7 +11,7 @@ class Employee
 private:
 	char name[NAME_LEN];
 public:
-	Employee(char* name)
+	Employee(const char* name)
 	{
 		strcpy(this->name, name);
 	}
@@ -32,7 +32,7 @@ class PermanentWorker :public Employee
 private:
 	int salary;
 public:
-	PermanentWorker(char* name, int money)
+	PermanentWorker(const char* name, int money)
 		:Employee(name), salary(money)
 	{ }
 	int GetPay() const
@@ -52,7 +52,7 @@ private:
 	int workTime;
 	int PayPerHour;
 public:
-	TemporaryWorker(char* name, int pay)
+	TemporaryWorker(const char* name, int pay)
 		:Employee(name), workTime(0), PayPerHour(pay)
 	{ }
 	void AddWorkTime(int time)
@@ -76,7 +76,7 @@ private:
 	int salesResult;
 	double bounusRatio;
 public:
-	SalesWorker(char* name, int money, double ratio)
+	SalesWorker(const char* name, int money, double ratio)
 		:PermanentWorker(name, money), salesResult(0), bounusRatio(ratio)
 	{ }
 	void AddSalesResult(int value)
@@ -112,7 +112,7 @@ public:
 	}
 	void ShowAllSalaryInfo() const
 	{
-		for (int i = 0; i << empNum; i++)
+		for (int i = 0; i < empNum; i++)
 			empList[i]->ShowSalaryInfo();
 	}
 	void ShowTotalSalary() const
@@ -148,9 +148,11 @@ int main(void)
 	//fseller3->AddSalesResult(7000);
 	//handler.AddEmployee(fseller3);
 
-	//handler.AddEmployee(new PermanentWorker("Kim", 1000));
-	//handler.AddEmployee(new PermanentWorker("Park", 1500));
-	
+	handler.AddEmployee(new PermanentWorker("Kim", 1000));
+	handler.AddEmployee(new PermanentWorker("Park", 1500));
+
 	handler.ShowAllSalaryInfo();
+
+	handler.ShowTotalSalary();
 	return 0;
 }
