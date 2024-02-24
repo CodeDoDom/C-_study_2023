@@ -6,6 +6,13 @@ using namespace std;
 const int NAME_LEN = 100;
 const int EMPLIST_MAX = 50;
 
+namespace RISK_LEVEL
+{
+	enum {
+		RISK_A = 30, RISK_B = 20, RISK_C = 10
+	};
+}
+
 class Employee
 {
 private:
@@ -91,6 +98,32 @@ public:
 	}
 };
 
+class ForeignSalesWorker :public SalesWorker
+{
+private:
+	int salesResult;
+	int riskLevel;
+public:
+	ForeignSalesWorker(const char* name, int money, double ratio, int lisk)
+		:SalesWorker(name, money, ratio), salesResult(0), riskLevel(lisk)
+	{ }
+	void AddSalesResult(int value)
+	{
+		salesResult += value;
+	}
+	int GetPay() const
+	{
+		return SalesWorker::GetPay()	// 기본급여 + 인센티브
+			;	// (기본급여 + 인센티브)의 n% 추가 지급
+		//ex. 기본+인센 = 100원, n% = 30%라면 -> 전체 급여(ForeignSalesWorker::GetPay()) = 130원
+	}
+	void ShowSalaryInfo() const
+	{
+		ShowYourName();
+		cout << "salary: " << GetPay() << endl << endl;
+	}
+};
+
 class EmployeeHandler
 {
 private:
@@ -132,9 +165,9 @@ int main(void)
 	EmployeeHandler handler;
 
 	// 해외 영업직 등록(8_1번 문제에서 추가된 부분)
-	//ForeignSalesWorker* fseller1 = new ForeignSalesWorker("Hong", 1000, 0.1, RISK_LEVEL::RISK_A);
-	//fseller1->AddSalesResult(7000);
-	//handler.AddEmployee(fseller1);
+	ForeignSalesWorker* fseller1 = new ForeignSalesWorker("Hong", 1000, 0.1, RISK_LEVEL::RISK_A);
+	fseller1->AddSalesResult(7000);
+	handler.AddEmployee(fseller1);
 
 	//ForeignSalesWorker* fseller2 = new ForeignSalesWorker("Yoon", 1000, 0.1, RISK_LEVEL::RISK_B);
 	//fseller2->AddSalesResult(7000);
@@ -144,8 +177,8 @@ int main(void)
 	//fseller3->AddSalesResult(7000);
 	//handler.AddEmployee(fseller3);
 
-	handler.AddEmployee(new PermanentWorker("Kim", 1000));
-	handler.AddEmployee(new PermanentWorker("Park", 1500));
+	//handler.AddEmployee(new PermanentWorker("Kim", 1000));
+	//handler.AddEmployee(new PermanentWorker("Park", 1500));
 
 	handler.ShowAllSalaryInfo();
 
