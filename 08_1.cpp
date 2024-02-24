@@ -105,22 +105,22 @@ private:
 	int riskLevel;
 public:
 	ForeignSalesWorker(const char* name, int money, double ratio, int lisk)
-		:SalesWorker(name, money, ratio), salesResult(0), riskLevel(lisk)
+		:SalesWorker(name, money, ratio), riskLevel(lisk)
 	{ }
-	void AddSalesResult(int value)
+	int GetRiskPay() const	// 위험 수당
 	{
-		salesResult += value;
+		return (int)(SalesWorker::GetPay() * riskLevel / 100.0);
 	}
 	int GetPay() const
 	{
-		return SalesWorker::GetPay()	// 기본급여 + 인센티브
-			;	// (기본급여 + 인센티브)의 n% 추가 지급
-		//ex. 기본+인센 = 100원, n% = 30%라면 -> 전체 급여(ForeignSalesWorker::GetPay()) = 130원
+		return SalesWorker::GetPay() + GetRiskPay();
 	}
 	void ShowSalaryInfo() const
 	{
 		ShowYourName();
-		cout << "salary: " << GetPay() << endl << endl;
+		cout << "Salary: " << SalesWorker::GetPay() << endl;
+		cout << "위험수당: " << GetRiskPay() << endl;
+		cout << "총합: " << GetPay() << endl << endl;
 	}
 };
 
@@ -169,13 +169,13 @@ int main(void)
 	fseller1->AddSalesResult(7000);
 	handler.AddEmployee(fseller1);
 
-	//ForeignSalesWorker* fseller2 = new ForeignSalesWorker("Yoon", 1000, 0.1, RISK_LEVEL::RISK_B);
-	//fseller2->AddSalesResult(7000);
-	//handler.AddEmployee(fseller2);
+	ForeignSalesWorker* fseller2 = new ForeignSalesWorker("Yoon", 1000, 0.1, RISK_LEVEL::RISK_B);
+	fseller2->AddSalesResult(7000);
+	handler.AddEmployee(fseller2);
 
-	//ForeignSalesWorker* fseller3 = new ForeignSalesWorker("Lee", 1000, 0.1, RISK_LEVEL::RISK_C);
-	//fseller3->AddSalesResult(7000);
-	//handler.AddEmployee(fseller3);
+	ForeignSalesWorker* fseller3 = new ForeignSalesWorker("Lee", 1000, 0.1, RISK_LEVEL::RISK_C);
+	fseller3->AddSalesResult(7000);
+	handler.AddEmployee(fseller3);
 
 	//handler.AddEmployee(new PermanentWorker("Kim", 1000));
 	//handler.AddEmployee(new PermanentWorker("Park", 1500));
