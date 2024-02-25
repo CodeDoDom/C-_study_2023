@@ -75,7 +75,7 @@ private:
 public:
 	NormalAccount(char* name, int id, int money, int rate);
 
-	int GetInterestRate(int money) const;	// 입금 시 추가되는 이자 계산
+	int GetInterest() const;	// 입금 시 추가되는 기본이자 계산
 	void ShowAccInfo() const;	// 계좌 정보 출력
 };
 
@@ -83,7 +83,7 @@ NormalAccount::NormalAccount(char* name, int id, int money, int rate)
 	:Account(name, id, money), interestRate(rate)
 { }
 
-int NormalAccount::GetInterestRate(int money) const
+int NormalAccount::GetInterest() const
 {
 	return (int)(Account::CheckBalance() * (interestRate / 100.0));
 }
@@ -92,6 +92,51 @@ void NormalAccount::ShowAccInfo() const
 {
 	Account::ShowAccInfo();
 	cout << "이율: " << interestRate << "%" << endl;
+}
+
+class HighCreditAccount :public NormalAccount
+{
+private:
+	int creditLank;
+public:
+	HighCreditAccount(char* name, int id, int money, int rate, int credit);
+
+	int ChangeLanktoRate() const;	// 신용 등급별 이율을 계산하기 위해 만듦
+	int GetCreditInterest() const;	// 입금 시 추가되는 (기본 이자 + 신용 등급별 이자) 계산
+	void ShowAccInfo() const;		// 계좌 정보 출력
+};
+
+HighCreditAccount::HighCreditAccount(char* name, int id, int money, int rate, int credit)
+	:NormalAccount(name, id, money, rate), creditLank(credit)
+{ }
+
+int HighCreditAccount::ChangeLanktoRate() const
+{
+	if (creditLank == 1)		// A 등급
+		return 7;
+	else if (creditLank == 2)	// B 등급
+		return 4;
+	else						// C 등급
+		return 2;
+}
+
+int HighCreditAccount::GetCreditInterest() const
+{
+	return (int)(NormalAccount::GetInterest()	// 기본 이자
+		+ (Account::CheckBalance() * (ChangeLanktoRate() / 100.0)));	// 신용 등급별 이자
+}
+
+void HighCreditAccount::ShowAccInfo() const
+{
+	NormalAccount::ShowAccInfo();
+	cout << "신용 등급: ";// << creditLank << endl;
+	if (creditLank == 1)
+		cout << "A" << endl;
+	else if (creditLank == 2)
+		cout << "B" << endl;
+	else
+		cout << "C" << endl;
+	cout << "신용 등급에 따른 추가 이율: " << ChangeLanktoRate() << "%" << endl;
 }
 
 class AccountHandler
@@ -120,7 +165,8 @@ void AccountHandler::MakeAccount()
 	char name[NAME_LEN];
 	int accID;
 	int balance;
-	int rate;
+	int rate;	// normalaccount용
+	int credit;	// highcreditaccount용
 
 	cout << "[계좌개설]" << endl;
 	cout << "계좌주 입력: ";
@@ -135,7 +181,11 @@ void AccountHandler::MakeAccount()
 	cout << "이율: ";
 	cin >> rate;
 
-	accArr[accCnt++] = new NormalAccount(name, accID, balance, rate);
+	cout << "신용 등급(1. A 등급, 2. B 등급, 3. C 등급): ";
+	cin >> credit;
+
+	//accArr[accCnt++] = new NormalAccount(name, accID, balance, rate);
+	accArr[accCnt++] = new HighCreditAccount(name, accID, balance, rate, credit);
 	cout << endl;
 }
 
