@@ -20,7 +20,7 @@ public:
 	int GetAccID() const;
 	void DepositMoney(int money);
 	int WithdrawMoney(int money);
-	void ShowAccInfo() const;
+	virtual void ShowAccInfo() const;	// 가상 함수: 가상 함수를 사용하면 동일한 함수 호출에 대해 서로 다른 클래스의 함수가 실행될 수 있음
 	int CheckBalance() const;	// 통장 잔고 확인용
 	~Account();
 };
@@ -71,21 +71,21 @@ Account::~Account()
 class NormalAccount :public Account
 {
 private:
-	double interestRate;
+	int interestRate;
 public:
-	NormalAccount(char* name, int id, int money, double rate);
+	NormalAccount(char* name, int id, int money, int rate);
 
 	int GetInterestRate(int money) const;	// 입금 시 추가되는 이자 계산
 	void ShowAccInfo() const;	// 계좌 정보 출력
 };
 
-NormalAccount::NormalAccount(char* name, int id, int money, double rate)
+NormalAccount::NormalAccount(char* name, int id, int money, int rate)
 	:Account(name, id, money), interestRate(rate)
 { }
 
 int NormalAccount::GetInterestRate(int money) const
 {
-	return (int)(Account::CheckBalance() * interestRate);
+	return (int)(Account::CheckBalance() * (interestRate / 100.0));
 }
 
 void NormalAccount::ShowAccInfo() const
@@ -120,7 +120,7 @@ void AccountHandler::MakeAccount()
 	char name[NAME_LEN];
 	int accID;
 	int balance;
-	double rate;
+	int rate;
 
 	cout << "[계좌개설]" << endl;
 	cout << "계좌주 입력: ";
