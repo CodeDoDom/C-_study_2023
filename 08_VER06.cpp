@@ -1,3 +1,7 @@
+/*
+Banking System Ver 0.6
+내용: 이좌관련 계좌 클래스의 추가
+*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <cstring>
