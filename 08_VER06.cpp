@@ -6,6 +6,7 @@ using namespace std;
 const int NAME_LEN = 20;
 
 enum { MAKE = 1, DEPOSIT, WITHDRAW, SHOW, EXIT };
+enum { LANK_A = 1, LANK_B = 2, LANK_C = 3 };
 
 class Account
 {
@@ -120,12 +121,17 @@ HighCreditAccount::HighCreditAccount(char* name, int id, int money, int rate, in
 
 int HighCreditAccount::ChangeLanktoRate() const
 {
-	if (creditLank == 1)		// A 등급
+	switch (creditLank)
+	{
+	case LANK_A:
 		return 7;
-	else if (creditLank == 2)	// B 등급
+	case LANK_B:
 		return 4;
-	else						// C 등급
+	case LANK_C:
 		return 2;
+	default:
+		return 0;
+	}
 }
 
 int HighCreditAccount::GetCreditInterest() const
