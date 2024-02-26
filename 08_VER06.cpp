@@ -148,6 +148,8 @@ public:
 	AccountHandler();
 	void ShowMenu() const;
 	void MakeAccount();
+	void MakeNormalAccount();
+	void MakeHighCreditAccount();
 	void Deposit();
 	void Withdraw();
 	void ShowInfo() const;
@@ -162,13 +164,61 @@ void AccountHandler::ShowMenu() const
 
 void AccountHandler::MakeAccount()
 {
+	int choice;
+
+	cout << "[계좌개설]" << endl;
+	while(1)
+	{
+		cout << "어떤 종류의 계좌를 개설하시겠습니까?(1번. 보통예금계좌, 2번. 신용신뢰계좌): ";
+		cin >> choice;
+
+		switch (choice)
+		{
+		case 1:
+			MakeNormalAccount();
+			return;
+		case 2:
+			MakeHighCreditAccount();
+			return;
+		default:
+			cout << "잘못된 입력입니다. 재입력해주세요." << endl;
+		}
+	}
+}
+
+void AccountHandler::MakeNormalAccount()
+{
 	char name[NAME_LEN];
 	int accID;
 	int balance;
-	int rate;	// normalaccount용
-	int credit;	// highcreditaccount용
+	int rate;
+	
+	cout << "[보통예금계좌 생성]" << endl;
+	cout << "계좌주 입력: ";
+	cin >> name;
 
-	cout << "[계좌개설]" << endl;
+	cout << "계좌번호 생성: ";
+	cin >> accID;
+
+	cout << "입금액: ";
+	cin >> balance;
+
+	cout << "이율(정수 입력): ";
+	cin >> rate;
+
+	accArr[accCnt++] = new NormalAccount(name, accID, balance, rate);
+	cout << endl;
+}
+
+void AccountHandler::MakeHighCreditAccount()
+{
+	char name[NAME_LEN];
+	int accID;
+	int balance;
+	int rate;
+	int credit;
+
+	cout << "[신용신뢰계좌 생성]" << endl;
 	cout << "계좌주 입력: ";
 	cin >> name;
 
@@ -184,7 +234,6 @@ void AccountHandler::MakeAccount()
 	cout << "신용 등급(1. A 등급, 2. B 등급, 3. C 등급): ";
 	cin >> credit;
 
-	//accArr[accCnt++] = new NormalAccount(name, accID, balance, rate);
 	accArr[accCnt++] = new HighCreditAccount(name, accID, balance, rate, credit);
 	cout << endl;
 }
