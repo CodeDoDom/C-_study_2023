@@ -6,7 +6,10 @@ using namespace std;
 const int NAME_LEN = 20;
 
 enum { MAKE = 1, DEPOSIT, WITHDRAW, SHOW, EXIT };
-enum { LANK_A = 1, LANK_B = 2, LANK_C = 3 };
+
+enum { LANK_A = 1, LANK_B = 2, LANK_C = 3 };	// 신용 등급
+
+enum { NORMAL = 1, CREDIT = 2 };	// 계좌 종류
 
 class Account
 {
@@ -169,7 +172,7 @@ public:
 	void ShowMenu() const;
 	void MakeAccount();
 	void MakeNormalAccount();
-	void MakeHighCreditAccount();
+	void MakeCreditAccount();
 	void Deposit();
 	void Withdraw();
 	void ShowInfo() const;
@@ -194,11 +197,11 @@ void AccountHandler::MakeAccount()
 
 		switch (choice)
 		{
-		case 1:
+		case NORMAL:
 			MakeNormalAccount();
 			return;
-		case 2:
-			MakeHighCreditAccount();
+		case CREDIT:
+			MakeCreditAccount();
 			return;
 		default:
 			cout << "잘못된 입력입니다. 재입력해주세요." << endl;
@@ -230,7 +233,7 @@ void AccountHandler::MakeNormalAccount()
 	cout << endl;
 }
 
-void AccountHandler::MakeHighCreditAccount()
+void AccountHandler::MakeCreditAccount()
 {
 	char name[NAME_LEN];
 	int accID;
