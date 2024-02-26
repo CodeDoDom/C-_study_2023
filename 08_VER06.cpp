@@ -18,7 +18,7 @@ public:
 	Account(const Account& copy);
 
 	int GetAccID() const;
-	void DepositMoney(int money);
+	virtual void DepositMoney(int money);
 	int WithdrawMoney(int money);
 	virtual void ShowAccInfo() const;	// 가상 함수: 가상 함수를 사용하면 동일한 함수 호출에 대해 서로 다른 클래스의 함수가 실행될 수 있음
 	int CheckBalance() const;	// 통장 잔고 확인용
@@ -76,6 +76,7 @@ public:
 	NormalAccount(char* name, int id, int money, int rate);
 
 	int GetInterest() const;	// 입금 시 추가되는 기본이자 계산
+	void DepositMoney(int money);
 	void ShowAccInfo() const;	// 계좌 정보 출력
 };
 
@@ -86,6 +87,12 @@ NormalAccount::NormalAccount(char* name, int id, int money, int rate)
 int NormalAccount::GetInterest() const
 {
 	return (int)(Account::CheckBalance() * (interestRate / 100.0));
+}
+
+void NormalAccount::DepositMoney(int money)
+{
+	Account::DepositMoney(money);
+	Account::DepositMoney(money + GetInterest());
 }
 
 void NormalAccount::ShowAccInfo() const
@@ -151,6 +158,8 @@ public:
 	void MakeNormalAccount();
 	void MakeHighCreditAccount();
 	void Deposit();
+	void DepositNormalAccount();	// 보통예금계좌에 입금할 때
+	void DepositHighCreditAccount();	// 신용신뢰계좌에 입금할 때
 	void Withdraw();
 	void ShowInfo() const;
 	~AccountHandler();
@@ -268,6 +277,16 @@ void AccountHandler::Deposit()
 
 	cout << "존재하지 않는 계좌입니다." << endl;
 	cout << endl;
+}
+
+void AccountHandler::DepositNormalAccount()
+{
+
+}
+
+void AccountHandler::DepositHighCreditAccount()
+{
+
 }
 
 void AccountHandler::Withdraw()
