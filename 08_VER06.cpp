@@ -171,12 +171,13 @@ public:
 	AccountHandler();
 	void ShowMenu() const;
 	void MakeAccount();
-	void MakeNormalAccount();
-	void MakeCreditAccount();
 	void Deposit();
 	void Withdraw();
 	void ShowInfo() const;
 	~AccountHandler();
+protected:
+	void MakeNormalAccount();
+	void MakeCreditAccount();
 };
 
 void AccountHandler::ShowMenu() const
