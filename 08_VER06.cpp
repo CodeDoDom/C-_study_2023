@@ -91,8 +91,8 @@ int NormalAccount::GetInterest() const
 
 void NormalAccount::DepositMoney(int money)
 {
+	Account::DepositMoney(GetInterest());
 	Account::DepositMoney(money);
-	Account::DepositMoney(money + GetInterest());
 }
 
 void NormalAccount::ShowAccInfo() const
@@ -109,7 +109,8 @@ public:
 	HighCreditAccount(char* name, int id, int money, int rate, int credit);
 
 	int ChangeLanktoRate() const;	// 신용 등급별 이율을 계산하기 위해 만듦
-	int GetCreditInterest() const;	// 입금 시 추가되는 (기본 이자 + 신용 등급별 이자) 계산
+	int GetCreditInterest() const;	// 입금 시 추가되는 전체 이자(기본 이자 + 신용 등급별 이자) 계산
+	void DepositMoney(int money);
 	void ShowAccInfo() const;		// 계좌 정보 출력
 };
 
@@ -131,6 +132,12 @@ int HighCreditAccount::GetCreditInterest() const
 {
 	return (int)(NormalAccount::GetInterest()	// 기본 이자
 		+ (Account::CheckBalance() * (ChangeLanktoRate() / 100.0)));	// 신용 등급별 이자
+}
+
+void HighCreditAccount::DepositMoney(int money)
+{
+	Account::DepositMoney(GetCreditInterest());
+	Account::DepositMoney(money);
 }
 
 void HighCreditAccount::ShowAccInfo() const
@@ -158,8 +165,6 @@ public:
 	void MakeNormalAccount();
 	void MakeHighCreditAccount();
 	void Deposit();
-	void DepositNormalAccount();	// 보통예금계좌에 입금할 때
-	void DepositHighCreditAccount();	// 신용신뢰계좌에 입금할 때
 	void Withdraw();
 	void ShowInfo() const;
 	~AccountHandler();
@@ -277,16 +282,6 @@ void AccountHandler::Deposit()
 
 	cout << "존재하지 않는 계좌입니다." << endl;
 	cout << endl;
-}
-
-void AccountHandler::DepositNormalAccount()
-{
-
-}
-
-void AccountHandler::DepositHighCreditAccount()
-{
-
 }
 
 void AccountHandler::Withdraw()
