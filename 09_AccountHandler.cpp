@@ -1,6 +1,6 @@
 #include "09_BankingCommonDec1.h"
 #include "09_AccountHandler.h"
-#include "09_Account.h"	// 꼭 필요한가?? AccountHandler 헤더에 이미 포함되어 있는데?
+//#include "09_Account.h"	// 꼭 필요한가?? AccountHandler 헤더에 이미 포함되어 있는데?
 #include "09_NormalAccount.h"
 #include "09_HighCreditAccount.h"
 
