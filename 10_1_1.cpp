@@ -20,7 +20,7 @@ public:
 
 Point operator-(const Point& pos1, const Point& pos2)
 {
-	Point pos(pos1.xpos + pos2.xpos, pos1.ypos + pos2.ypos);
+	Point pos(pos1.xpos - pos2.xpos, pos1.ypos - pos2.ypos);
 	return pos;
 }
 
